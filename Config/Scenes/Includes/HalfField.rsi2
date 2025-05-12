@@ -124,7 +124,7 @@
   </Vertices>
   
   <Vertices name="fieldBoxLines">
-# penalty area line
+# penalty area line 
 0.625 2.025 0
 0.625 1.975 0
 2.225 1.975 0
