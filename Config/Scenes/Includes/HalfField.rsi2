@@ -116,7 +116,7 @@
 2.280 -3.025 0
 2.280 3.025 0
 
-# left touchline
+# touchline left
 -2.225 3.025 0
 -2.225 2.975 0
 2.225 2.975 0
@@ -180,7 +180,6 @@
 -2.025 -0.05 0
 -2.025 -0.025 0
   </Vertices>
-
 
   <ComplexAppearance name="fieldLinesBorder">
   <Surface ref="fieldWhite"/>
@@ -354,8 +353,6 @@
 -1.676992 -0.548008 0
 
   </Vertices>
-
-
 
   <Vertices name="fieldCenterCircleHalf">
 # center circle (removed)

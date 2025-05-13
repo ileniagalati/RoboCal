@@ -11,8 +11,7 @@
     <Compound ref="teams"/>
 
     <Compound ref="robots">
-      <Rotation z="180degree"/>
-      <Translation x="-1m"/>
+
     </Compound>
     <Compound ref="extras">
       <Rotation z="180degree"/>
@@ -21,7 +20,7 @@
 
     <Compound name="balls">
       <Body ref="ball">
-        <Translation x="-1m" z="1m"/>
+        <Translation x="0.5" z="1m"/>
       </Body>
     </Compound>
 
