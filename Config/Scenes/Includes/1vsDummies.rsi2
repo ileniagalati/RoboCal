@@ -2,7 +2,7 @@
 
   <Compound name="robots">
     <Body ref="Nao" name="robot5">
-      <Translation z="320mm"/>
+      <Translation x="0.5m" z="320mm"/>
       <Rotation z="180degree"/>
       <Set name="NaoColor" value="black"/>
     </Body>
@@ -14,19 +14,19 @@
       <Set name="NaoColor" value="blue"/>
     </Body>
     <Body ref="NaoDummy" name="robot22">
-      <Translation x="-1.5" y="-0.9" z="320mm"/>
+      <Translation x="-2" y="-0.9" z="320mm"/>
       <Set name="NaoColor" value="red"/>
     </Body>
     <Body ref="NaoDummy" name="robot23">
-      <Translation x="-1.1" y="1.3" z="320mm"/>
+      <Translation x="-1.6" y="1.3" z="320mm"/>
       <Set name="NaoColor" value="red"/>
     </Body>
     <Body ref="NaoDummy" name="robot24">
-      <Translation x="-0.9" z="320mm"/>
+      <Translation x="-1.4" z="320mm"/>
       <Set name="NaoColor" value="red"/>
     </Body>
     <Body ref="NaoDummy" name="robot25">
-      <Translation x="-2" y="0.4" z="320mm"/>
+      <Translation x="-2.5" y="0.4" z="320mm"/>
       <Set name="NaoColor" value="black"/>
     </Body>
   </Compound>

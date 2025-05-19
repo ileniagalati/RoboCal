@@ -397,7 +397,7 @@
     <ComplexAppearance ref="fieldCross">
       <Translation x="3.2" y="0" z="0"/>
     </ComplexAppearance>
-    <ComplexAppearance ref="fieldCenterCircle"/>
+
   </ComplexAppearance>
 
   <ComplexAppearance name="fieldCross">
