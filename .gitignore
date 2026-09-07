@@ -22,4 +22,5 @@ GPATH
 GRTAGS
 GTAGS
 tags
-Thumbs.dbBuild/
+Thumbs.db
+Build/
