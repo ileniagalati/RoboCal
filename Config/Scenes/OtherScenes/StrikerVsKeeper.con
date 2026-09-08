@@ -1,0 +1,62 @@
+# =============================================================================
+#  StrikerVsKeeper - duello attaccante (robot25, n.5) / portiere (robot1, n.1).
+#  Va in coppia con StrikerVsKeeper.ros2.
+#  Portato da StrikerVsKeeper.con del vecchio progetto (scenario DemoDuel).
+# =============================================================================
+
+# Percezioni oracle -> localizzazione accurata.
+# Funziona perche' lo scenario DemoDuel eredita i moduli da Default.
+call Includes/PerceptOracle
+
+robot all
+
+# Posa oracolata. Il campo SPL e' simmetrico di 180 gradi e questo drill parte
+# direttamente in PLAYING, senza la fase READY che normalmente dice al robot da
+# che parte sta: il SelfLocator puo' agganciare l'ipotesi specchiata, e in quel
+# caso l'attaccante calcia a 180 gradi dalla porta pur "credendo" di fare la cosa
+# giusta. Con la posa presa dal ground truth il problema non si pone.
+# ATTENZIONE: questa riga ha senso SOLO con lo scenario DemoDuel (moduli di
+# Default, campo intero). Con AnyPlaceDemo romperebbe tutto, perche' li' la skill
+# si aspetta theRobotPose all'identita'.
+# Commentare per provare il SelfLocator vero.
+for Cognition mr RobotPose OracledWorldModelProvider
+
+# PerceptOracle chiama Includes/GameStates, che porta GameControllerData dal
+# LogDataProvider. Con il GameController attivo GameStateProvider DISABILITA
+# l'interfaccia a pulsanti e il pulsante del petto non fa piu' niente.
+# Qui si rimette il provider normale: nessun pacchetto GameController arriva ai
+# robot, quindi il petto torna a funzionare come nel vecchio progetto.
+for Cognition mr GameControllerData GameControllerDataProvider
+
+# Sveglia i robot: senza questo restano "unstiff".
+dr module:GameStateProvider:active
+
+# Drill custom: lo stato deve restare PLAYING, niente rilevamento gol/rimessa.
+# Senza questo il gol manda il gioco in READY e HandleGameState sostituisce la demo.
+ar ballOut off
+
+# Drill custom (non partita): il GameController non deve penalizzare o
+# riposizionare i robot.
+ar placePlayers off
+ar placeBall off
+ar penalizeLeavingTheField off
+ar penalizeIllegalPosition off
+ar penalizeIllegalPositionInSet off
+
+# "Meeek! headMotionRequest has been set more than once in this cycle": lo stato
+# striker chiama LookAtBall() e poi KickAtGoal(), che imposta gia' la testa da
+# solo. E' innocuo (le due richieste sono identiche) ma riempie la console ad
+# ogni frame. Messo a "ignore" solo per questa scena.
+set module:LibCheckProvider notSetReaction = { motionRequest = warn; headMotionRequest = warn; calibrationFinished = ignore; passTarget = ignore; }; multipleSetReaction = { motionRequest = warn; headMotionRequest = ignore; calibrationFinished = warn; passTarget = warn; };
+
+# Chest (Shift+Ctrl+G) - preme (avvia: premi due volte per andare in playing)
+jc press 7 set representation:KeyStates pressed = { headFront = false; headMiddle = false; headRear = false; lHandBack = false; lHandLeft = false; lHandRight = false; rHandBack = false; rHandLeft = false; rHandRight = false; lFootLeft = false; lFootRight = false; rFootLeft = false; rFootRight = false; chest = true; };
+# Chest (Shift+Ctrl+G) - rilascia
+jc release 7 set representation:KeyStates pressed = { headFront = false; headMiddle = false; headRear = false; lHandBack = false; lHandLeft = false; lHandRight = false; rHandBack = false; rHandLeft = false; rHandRight = false; lFootLeft = false; lFootRight = false; rFootLeft = false; rFootRight = false; chest = false; };
+
+# Bumper piede sx lato sx (Shift+Ctrl+Y) - cambia demo
+jc press 25 set representation:KeyStates pressed = { headFront = false; headMiddle = false; headRear = false; lHandBack = false; lHandLeft = false; lHandRight = false; rHandBack = false; rHandLeft = false; rHandRight = false; lFootLeft = true; lFootRight = false; rFootLeft = false; rFootRight = false; chest = false; };
+jc release 25 set representation:KeyStates pressed = { headFront = false; headMiddle = false; headRear = false; lHandBack = false; lHandLeft = false; lHandRight = false; rHandBack = false; rHandLeft = false; rHandRight = false; lFootLeft = false; lFootRight = false; rFootLeft = false; rFootRight = false; chest = false; };
+
+echo Shift+Ctrl+G: Chest (avvia: premi due volte)
+echo Shift+Ctrl+Y: Bumper piede (cambia demo)

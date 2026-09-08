@@ -23,3 +23,8 @@ GRTAGS
 GTAGS
 tags
 Thumbs.db
+/Build
+*.md
+*.opn
+/Install
+/Configure

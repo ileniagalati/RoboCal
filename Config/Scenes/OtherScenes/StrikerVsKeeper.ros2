@@ -1,0 +1,87 @@
+<Simulation>
+
+  <Include href="../Includes/NaoV6H25.rsi2"/>
+  <Include href="../Includes/Ball2016SPL.rsi2"/>
+  <Include href="../Includes/Field2020SPL.rsi2"/>
+
+  <!--
+    Duello attaccante / portiere. Portato dal vecchio progetto (StrikerVsKeeper.ros3,
+    scenario DemoDuel) alla versione .ros2 di questo repo.
+
+    Due cose devono valere perche' DemoStrikerVSKeeper funzioni, e sono entrambe
+    imposte dal codice della skill:
+
+    1) CAMPO INTERO. La skill confronta la palla con xPosOwnGoalLine aspettandosi
+       un valore NEGATIVO (keeperSave -> "ball.x() < xPosOwnGoalLine" significa
+       "palla oltre la linea di porta"). Il mezzo campo di questo progetto ha
+       xPosOwnGoalLine = +4500 e quella condizione sarebbe sempre vera: il portiere
+       annuncerebbe "Gol" senza mai parare. Per questo la scena seleziona la
+       location "StrikerVsKeeper", che contiene solo un fieldDimensions.cfg a campo
+       intero. Il mezzo campo resta il default per tutto il resto del progetto.
+
+    2) SQUADRE AVVERSE. KickAtGoal mira alla porta AVVERSARIA, il portiere difende
+       la PROPRIA: se fossero compagni tirerebbero a due porte opposte. Quindi il
+       portiere e' della prima squadra (robot1 -> giocatore n.1, isGoalkeeper) e
+       l'attaccante della seconda (robot25 -> giocatore n.5). I numeri di maglia
+       restano 1 e 5.
+
+    Nota sulle coordinate: la prima squadra ha il mondo specchiato
+    (SimulatedRobot3D.cpp:140), la seconda no. Con questa disposizione il portiere
+    si vede a (-4300, 0) davanti alla propria porta, e l'attaccante a (1000, 0)
+    che tira verso +4500: la stessa porta, in mezzo la palla.
+  -->
+  <Compound name="robots">
+    <!-- PORTIERE: prima squadra, giocatore n.1 -> isGoalkeeper() true. -->
+    <Body ref="Nao" name="robot1">
+      <Translation x="4.3" z="320mm"/>
+      <Rotation z="180degree"/>
+      <Set name="NaoColor" value="purple"/>
+    </Body>
+
+    <!-- ATTACCANTE: seconda squadra, giocatore n.5. Tira alla porta del portiere. -->
+    <Body ref="Nao" name="robot25">
+      <Translation x="1.0" z="320mm"/>
+      <Rotation z="0degree"/>
+      <Set name="NaoColor" value="red"/>
+    </Body>
+  </Compound>
+
+  <Scene name="RoboCup" controller="SimulatedNao" stepLength="0.012" color="rgb(65%, 65%, 70%)" ERP="0.8" CFM="0.001" contactSoftERP="0.2" contactSoftCFM="0.005">
+    <PointLight z="9m" ambientColor="rgb(50%, 50%, 50%)"/>
+
+    <Compound name="teams">
+      <Compound name="B-Human">
+        <Compound name="5"/>
+        <Compound name="black"/>
+        <Compound name="purple"/>
+      </Compound>
+      <Compound name="B-Team">
+        <Compound name="70"/>
+        <Compound name="red"/>
+        <Compound name="blue"/>
+      </Compound>
+    </Compound>
+
+    <Compound ref="robots"/>
+
+    <Compound name="balls">
+      <Body ref="ball">
+        <Translation x="1.5" z="1m"/>
+      </Body>
+    </Compound>
+
+    <Compound ref="field"/>
+
+    <!-- Campo intero solo per questa scena: vedi punto 1 sopra. -->
+    <Compound name="location">
+      <Compound name="StrikerVsKeeper"/>
+    </Compound>
+
+    <!-- Scenario portato dal vecchio progetto: eredita i moduli da Default e
+         aggiunge HandleAnyPlaceDemo alle playingOptions. -->
+    <Compound name="scenarios">
+      <Compound name="DemoDuel"/>
+    </Compound>
+
+  </Scene>
+</Simulation>
