@@ -59,7 +59,7 @@ SoundPlayer::SoundPlayer()
   if(![[[NSProcessInfo processInfo] environment] objectForKey:@"IS_XCTEST"])
   {
     delegate = [[SoundPlayerDelegate alloc] initWithFlag:&playing andSemaphore:&sem];
-    speechSynthesizer = [[NSSpeechSynthesizer alloc] initWithVoice:@"com.apple.speech.synthesis.voice.Samantha"];
+    speechSynthesizer = [[NSSpeechSynthesizer alloc] initWithVoice:nil];
     [speechSynthesizer setDelegate:delegate];
   }
 }
