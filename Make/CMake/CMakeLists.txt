@@ -33,6 +33,19 @@ endif()
 
 project(B-Human LANGUAGES CXX)
 
+# Xcode 26/27's clang errors out ("conflicting deployment targets") during
+# AutoMoc's compiler-predefines probe, even when the two sources it complains
+# about actually agree. Skip that probe entirely so Qt AUTOMOC targets
+# (SimRobot, DeployDialog, ...) can still build on affected Xcode versions.
+set(CMAKE_AUTOMOC_COMPILER_PREDEFINES OFF)
+
+# With no explicit deployment target, Xcode defaults it to match the SDK
+# version, which tracks the installed Xcode version, not the running macOS
+# version. That breaks running locally-built apps (e.g. SimRobot) whenever
+# Xcode is newer than the host OS. Pin it explicitly and low enough to run
+# on any reasonably current macOS host.
+set(CMAKE_OSX_DEPLOYMENT_TARGET "26.0" CACHE STRING "" FORCE)
+
 if(("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL arm64 OR "${CMAKE_SYSTEM_PROCESSOR}" STREQUAL aarch64) AND NOT ROSETTA)
   set(X86 false)
   set(ARM true)
