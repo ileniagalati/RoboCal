@@ -1,0 +1,30 @@
+# =============================================================================
+#  UnicalMini - Monitoraggio Remoto di 2 Robot Reali (DemoPassMini)
+# =============================================================================
+
+# Chiede interattivamente gli IP WiFi dei due robot
+sc Giocatore1 ${IP Giocatore 1 - Porta (es. 192.168.123.1):,192.168.123.1,192.168.123.2,192.168.123.3,192.168.123.4,192.168.123.5}
+sc Giocatore2 ${IP Giocatore 2 - Centrocampo (es. 192.168.123.2):,192.168.123.2,192.168.123.1,192.168.123.3,192.168.123.4,192.168.123.5}
+
+# Seleziona entrambi i robot
+robot all
+
+# Inizializza la vista 2D del campo per tutti i robot connessi
+call Includes/FieldViews1
+call Includes/FieldViews2
+
+# Imposta le viste telecamera JPEG e i debug responses
+call Includes/DebugResponses
+call Includes/JPEGImageViews
+
+# Sveglia contemporaneamente entrambi i robot mettendoli nello stato di gioco attivo
+dr module:GameStateProvider:active
+
+echo ==========================================================
+echo  Monitoraggio remoto Mezzo Campo UNICAL attivo per Pass!
+echo  Robot connessi: Giocatore1 (Porta) e Giocatore2 (Centrocampo)
+echo  Ogni robot ha il proprio 'worldState' sotto:
+echo    - RoboCup -> puppets -> Giocatore1 -> field -> worldState
+echo    - RoboCup -> puppets -> Giocatore2 -> field -> worldState
+echo  Entrambi i robot sono stati attivati simultaneamente!
+echo ==========================================================

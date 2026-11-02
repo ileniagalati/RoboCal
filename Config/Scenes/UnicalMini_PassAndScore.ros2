@@ -1,0 +1,71 @@
+<Simulation>
+
+  <Include href="Includes/NaoV6H25.rsi2"/>
+  <Include href="Includes/Ball2016SPL.rsi2"/>
+  <Include href="Includes/UnicalMiniField.rsi2"/>
+
+  <!--
+    Scena Mezzo Campo UNICAL: Passaggio e Tiro (PassAndScore).
+    - Campo: Mezzo campo da laboratorio con porta a x = +2.225m (HalfField.rsi2)
+    - Location: UnicalMini (parametri calibrati in Config/Locations/UnicalMini/)
+    - Scenario: PassAndScore (modulo LibDemoProvider configurato con demoPassAndScore)
+    - Robot: Due robot nella stessa squadra:
+        * robot3: Giocatore n. 3 (Passatore)
+        * robot2: Giocatore n. 2 (Attaccante)
+  -->
+
+  <Compound name="robots">
+    <!-- ATTACCANTE (Giocatore n. 2): posizionato a x=1.8m, y=-0.3m, a 45deg (vede sia la palla in arrivo sia la porta) -->
+    <Body ref="Nao" name="robot22">
+      <Translation x="1.8" y="-0.3" z="320mm"/>
+      <Rotation z="45degree"/>
+      <Set name="NaoColor" value="black"/>
+    </Body>
+
+    <!-- PASSATORE (Giocatore n. 3): posizionato a x=0.8m, y=0.8m, orientato verso l'attaccante (-45deg) -->
+    <Body ref="Nao" name="robot23">
+      <Translation x="0.8" y="0.8" z="320mm"/>
+      <Rotation z="-45degree"/>
+      <Set name="NaoColor" value="black"/>
+    </Body>
+  </Compound>
+
+  <Scene name="RoboCup" controller="SimulatedNao" stepLength="0.012" color="rgb(65%, 65%, 70%)" ERP="0.8" CFM="0.001" contactSoftERP="0.2" contactSoftCFM="0.005">
+    <PointLight z="9m" ambientColor="rgb(50%, 50%, 50%)"/>
+
+    <Compound name="teams">
+      <Compound name="B-Human">
+        <Compound name="123"/>
+        <Compound name="black"/>
+        <Compound name="purple"/>
+      </Compound>
+      <Compound name="B-Team">
+        <Compound name="70"/>
+        <Compound name="red"/>
+        <Compound name="blue"/>
+      </Compound>
+    </Compound>
+
+    <Compound ref="robots"/>
+
+    <Compound name="balls">
+      <!-- Palla davanti ai piedi del passatore (robot3) -->
+      <Body ref="ball">
+        <Translation x="0.95" y="0.65" z="100mm"/>
+      </Body>
+    </Compound>
+
+    <Compound ref="field"/>
+
+    <!-- Seleziona i parametri calibrati per il laboratorio UNICAL -->
+    <Compound name="location">
+      <Compound name="UnicalMini"/>
+    </Compound>
+
+    <!-- Scenario dedicato con demoPassAndScore preimpostata -->
+    <Compound name="scenarios">
+      <Compound name="PassAndScore"/>
+    </Compound>
+
+  </Scene>
+</Simulation>

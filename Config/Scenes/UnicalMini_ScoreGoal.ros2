@@ -1,0 +1,62 @@
+<Simulation>
+
+  <Include href="Includes/NaoV6H25.rsi2"/>
+  <Include href="Includes/Ball2016SPL.rsi2"/>
+  <Include href="Includes/UnicalMiniField.rsi2"/>
+
+  <!--
+    Scena Mezzo Campo UNICAL: Tiro in Porta (ScoreGoal).
+    - Campo: Mezzo campo UNICAL calibrato (UnicalMiniField.rsi2) con porta a x = +3.32m / 3.5m
+    - Location: UnicalMini (parametri di visione e campo calibrati per il laboratorio)
+    - Scenario: ScoreGoal (modulo LibDemoProvider configurato con demoScoreGoal)
+    - Robot: 1 attaccante (robot2) posizionato al centro campo, rivolto verso la porta
+  -->
+
+  <Compound name="robots">
+    <!-- Attaccante: seconda squadra (robot22 -> giocatore n. 2) per avere coordinate non specchiate verso +X -->
+    <Body ref="Nao" name="robot22">
+      <Translation x="0.5" y="0" z="320mm"/>
+      <Rotation z="0degree"/>
+      <Set name="NaoColor" value="black"/>
+    </Body>
+  </Compound>
+
+  <Scene name="RoboCup" controller="SimulatedNao" stepLength="0.012" color="rgb(65%, 65%, 70%)" ERP="0.8" CFM="0.001" contactSoftERP="0.2" contactSoftCFM="0.005">
+    <PointLight z="9m" ambientColor="rgb(50%, 50%, 50%)"/>
+
+    <Compound name="teams">
+      <Compound name="B-Human">
+        <Compound name="123"/>
+        <Compound name="black"/>
+        <Compound name="purple"/>
+      </Compound>
+      <Compound name="B-Team">
+        <Compound name="70"/>
+        <Compound name="red"/>
+        <Compound name="blue"/>
+      </Compound>
+    </Compound>
+
+    <Compound ref="robots"/>
+
+    <Compound name="balls">
+      <!-- Palla posizionata davanti al robot (a x = 1.2m verso la porta) -->
+      <Body ref="ball">
+        <Translation x="1.2" y="0" z="50mm"/>
+      </Body>
+    </Compound>
+
+    <Compound ref="field"/>
+
+    <!-- Seleziona i parametri calibrati per il laboratorio UNICAL -->
+    <Compound name="location">
+      <Compound name="UnicalMini"/>
+    </Compound>
+
+    <!-- Scenario dedicato con demoScoreGoal preimpostata -->
+    <Compound name="scenarios">
+      <Compound name="ScoreGoal"/>
+    </Compound>
+
+  </Scene>
+</Simulation>

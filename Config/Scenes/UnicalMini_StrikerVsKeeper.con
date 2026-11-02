@@ -1,0 +1,36 @@
+# =============================================================================
+#  UnicalMini - StrikerVsKeeper (Attaccante vs Portiere)
+#  Robot 21: Portiere (davanti alla porta, rivolto verso il campo)
+#  Robot 22: Attaccante (a centrocampo, rivolto verso la porta)
+# =============================================================================
+
+# Include i comandi e le viste standard
+call Includes/Normal
+call Includes/Views
+
+# Disabilita le regole e gli interventi arbitrali automatici per il drill
+ar ballOut off
+ar placePlayers off
+ar placeBall off
+ar penalizeLeavingTheField off
+ar penalizeIllegalPosition off
+ar penalizeIllegalPositionInSet off
+
+# Seleziona tutti i robot
+robot all
+
+# Usa il vero filtro probabilistico di localizzazione (SelfLocator) per massima fedelta' con la realta'
+for Cognition mr RobotPose SelfLocator
+
+# Silenzia warning innocui per richieste testa duplicate
+set module:LibCheckProvider notSetReaction = { motionRequest = warn; headMotionRequest = warn; calibrationFinished = ignore; passTarget = ignore; }; multipleSetReaction = { motionRequest = warn; headMotionRequest = ignore; calibrationFinished = warn; passTarget = warn; };
+
+# Sveglia i robot mettendoli nello stato di gioco attivo
+dr module:GameStateProvider:active
+
+echo ==========================================================
+echo  Scena UnicalMini_StrikerVsKeeper caricata con successo!
+echo  Robot 21: Portiere (Giocatore n. 1)
+echo  Robot 22: Attaccante (Giocatore n. 2)
+echo  Scenario attivo: StrikerVsKeeperMini
+echo ==========================================================

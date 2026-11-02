@@ -1,0 +1,54 @@
+<Simulation>
+
+  <Include href="Includes/NaoV6H25.rsi2"/>
+  <Include href="Includes/Ball2016SPL.rsi2"/>
+  <Include href="Includes/UnicalMiniField.rsi2"/>
+
+  <!--
+    Scena Mezzo Campo UNICAL: Camminata in Quadrato (DemoWalkSquare).
+    - Campo: Mezzo campo da laboratorio (HalfField.rsi2)
+    - Location: UnicalMini
+    - Scenario: WalkSquare (modulo LibDemoProvider configurato con demoWalkSquare)
+    - Robot: 1 robot (robot1) posizionato a x = -0.5, y = -0.5 al centro dello spazio libero
+  -->
+
+  <Compound name="robots">
+    <Body ref="Nao" name="robot1">
+      <Translation x="-0.5" y="-0.5" z="320mm"/>
+      <Rotation z="0degree"/>
+      <Set name="NaoColor" value="black"/>
+    </Body>
+  </Compound>
+
+  <Scene name="RoboCup" controller="SimulatedNao" stepLength="0.012" color="rgb(65%, 65%, 70%)" ERP="0.8" CFM="0.001" contactSoftERP="0.2" contactSoftCFM="0.005">
+    <PointLight z="9m" ambientColor="rgb(50%, 50%, 50%)"/>
+
+    <Compound name="teams">
+      <Compound name="B-Human">
+        <Compound name="123"/>
+        <Compound name="black"/>
+        <Compound name="purple"/>
+      </Compound>
+      <Compound name="B-Team">
+        <Compound name="70"/>
+        <Compound name="red"/>
+        <Compound name="blue"/>
+      </Compound>
+    </Compound>
+
+    <Compound ref="robots"/>
+
+    <Compound ref="field"/>
+
+    <!-- Parametri calibrati per il laboratorio UNICAL -->
+    <Compound name="location">
+      <Compound name="UnicalMini"/>
+    </Compound>
+
+    <!-- Scenario dedicato con demoWalkSquare -->
+    <Compound name="scenarios">
+      <Compound name="WalkSquare"/>
+    </Compound>
+
+  </Scene>
+</Simulation>

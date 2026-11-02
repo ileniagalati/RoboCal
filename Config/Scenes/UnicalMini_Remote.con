@@ -1,0 +1,28 @@
+# =============================================================================
+#  UnicalMini - Monitoraggio Remoto di 2 Robot Reali (Portiere & Attaccante)
+# =============================================================================
+
+# Chiede interattivamente gli IP dei due robot (o seleziona dai suggeriti)
+sc Portiere ${IP Portiere (es. 192.168.123.1):,192.168.123.1,192.168.123.2,192.168.123.3,192.168.123.4,192.168.123.5}
+sc Attaccante ${IP Attaccante (es. 192.168.123.2):,192.168.123.2,192.168.123.1,192.168.123.3,192.168.123.4,192.168.123.5}
+
+# SELEZIONA ENTRAMBI I ROBOT PRIMA DI CREARE LE VISTE
+robot all
+
+# Inizializza la vista 2D del campo per tutti i robot connessi
+call Includes/FieldViews1
+call Includes/FieldViews2
+
+# Imposta le viste telecamera JPEG e i debug responses per tutti i robot
+call Includes/DebugResponses
+call Includes/JPEGImageViews
+
+echo ==========================================================
+echo  Monitoraggio remoto Mezzo Campo UNICAL attivo!
+echo  Robot connessi: Portiere e Attaccante
+echo  Ogni robot ha il proprio 'worldState' sotto:
+echo    - RoboCup -> puppets -> Portiere -> field -> worldState
+echo    - RoboCup -> puppets -> Attaccante -> field -> worldState
+echo  Usa 'robot Portiere' o 'robot Attaccante' per la console specifica.
+echo ==========================================================
+

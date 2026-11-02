@@ -6,6 +6,7 @@
   <Material name="ballPlastic">
     <Friction material="fieldCarpet" value="0.3"/>
     <RollingFriction material="fieldCarpet" value="0.3"/>
+    <Friction material="wall" value="0.2"/>
   </Material>
 
   <Body name="ball">

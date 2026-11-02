@@ -1,0 +1,34 @@
+# =============================================================================
+#  UnicalMini - ScoreGoal (Tiro in Porta)
+#  1 Robot attaccante posizionato davanti alla porta avversaria
+# =============================================================================
+
+# Include i comandi e le viste standard
+call Includes/Normal
+call Includes/Views
+
+# Disabilita le regole e gli interventi arbitrali automatici per il drill
+ar ballOut off
+ar placePlayers off
+ar placeBall off
+ar penalizeLeavingTheField off
+ar penalizeIllegalPosition off
+ar penalizeIllegalPositionInSet off
+
+# Seleziona il robot
+robot all
+
+# Usa il vero filtro probabilistico di localizzazione (SelfLocator) per massima fedelta' con la realta'
+for Cognition mr RobotPose SelfLocator
+
+# Silenzia warning innocui per richieste testa duplicate
+set module:LibCheckProvider notSetReaction = { motionRequest = warn; headMotionRequest = warn; calibrationFinished = ignore; passTarget = ignore; }; multipleSetReaction = { motionRequest = warn; headMotionRequest = ignore; calibrationFinished = warn; passTarget = warn; };
+
+# Sveglia il robot mettendolo nello stato di gioco attivo
+dr module:GameStateProvider:active
+
+echo ==========================================================
+echo  Scena UnicalMini_ScoreGoal caricata con successo!
+echo  Robot: Giocatore n. 2 (Attaccante)
+echo  Scenario attivo: ScoreGoal (DemoScoreGoal)
+echo ==========================================================

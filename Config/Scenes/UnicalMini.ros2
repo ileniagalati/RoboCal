@@ -1,0 +1,71 @@
+<Simulation>
+
+  <Include href="Includes/NaoV6H25.rsi2"/>
+  <Include href="Includes/Ball2016SPL.rsi2"/>
+  <Include href="Includes/UnicalMiniField.rsi2"/>
+
+  <!--
+    Scena Mezzo Campo UNICAL (UnicalMini).
+    - Campo: Mezzo campo da laboratorio con porta singola a x = +2.225m (HalfField.rsi2)
+    - Location: UnicalMini (parametri calibrati in Config/Locations/UnicalMini/)
+    - Scenario: DemoDuel (moduli di visione, porta e localizzazione attivi, logica demo)
+    - Robot: Due robot nella stessa squadra (B-Human):
+        * robot3: Giocatore n. 3 (Passatore in DemoPassAndScore)
+        * robot2: Giocatore n. 2 (Attaccante in DemoPassAndScore)
+  -->
+
+  <Compound name="robots">
+    <!-- ATTACCANTE (Giocatore n. 2): posizionato a meta' campo, orientato a tre quarti (25 deg) per vedere palla e porta -->
+    <Body ref="Nao" name="robot2">
+      <Translation x="0.5" y="-0.3" z="320mm"/>
+      <Rotation z="25degree"/>
+      <Set name="NaoColor" value="black"/>
+    </Body>
+
+    <!-- PASSATORE (Giocatore n. 3): posizionato a circa 1m dall'attaccante, orientato verso di lui -->
+    <Body ref="Nao" name="robot3">
+      <Translation x="-0.3" y="0.5" z="320mm"/>
+      <Rotation z="-45degree"/>
+      <Set name="NaoColor" value="black"/>
+    </Body>
+  </Compound>
+
+  <Scene name="RoboCup" controller="SimulatedNao" stepLength="0.012" color="rgb(65%, 65%, 70%)" ERP="0.8" CFM="0.001" contactSoftERP="0.2" contactSoftCFM="0.005">
+    <PointLight z="9m" ambientColor="rgb(50%, 50%, 50%)"/>
+
+    <Compound name="teams">
+      <Compound name="B-Human">
+        <Compound name="123"/>
+        <Compound name="black"/>
+        <Compound name="purple"/>
+      </Compound>
+      <Compound name="B-Team">
+        <Compound name="70"/>
+        <Compound name="red"/>
+        <Compound name="blue"/>
+      </Compound>
+    </Compound>
+
+    <Compound ref="robots"/>
+
+    <Compound name="balls">
+      <!-- Palla posizionata davanti al passatore (robot3) -->
+      <Body ref="ball">
+        <Translation x="-0.05" y="0.25" z="100mm"/>
+      </Body>
+    </Compound>
+
+    <Compound ref="field"/>
+
+    <!-- Seleziona i parametri calibrati per il laboratorio UNICAL -->
+    <Compound name="location">
+      <Compound name="UnicalMini"/>
+    </Compound>
+
+    <!-- Scenario con moduli attivi (visione/pali porta) ed esecuzione di HandleAnyPlaceDemo -->
+    <Compound name="scenarios">
+      <Compound name="DemoDuel"/>
+    </Compound>
+
+  </Scene>
+</Simulation>

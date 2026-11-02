@@ -1,0 +1,30 @@
+# =============================================================================
+#  UnicalMini - DemoWalkSquare (Camminata in Quadrato)
+# =============================================================================
+
+# Include i comandi e le viste standard
+call Includes/Normal
+call Includes/Views
+
+# Disabilita le regole e gli interventi arbitrali automatici per il drill
+ar ballOut off
+ar placePlayers off
+ar placeBall off
+ar penalizeLeavingTheField off
+ar penalizeIllegalPosition off
+ar penalizeIllegalPositionInSet off
+
+# Seleziona il robot
+robot all
+
+# Silenzia warning innocui per richieste testa duplicate
+set module:LibCheckProvider notSetReaction = { motionRequest = warn; headMotionRequest = warn; calibrationFinished = ignore; passTarget = ignore; }; multipleSetReaction = { motionRequest = warn; headMotionRequest = ignore; calibrationFinished = warn; passTarget = warn; };
+
+# Sveglia il robot mettendolo nello stato di gioco attivo
+dr module:GameStateProvider:active
+
+echo ==========================================================
+echo  Scena UnicalMini_WalkSquare caricata con successo!
+echo  Robot: Giocatore n. 1
+echo  Scenario attivo: WalkSquare (DemoWalkSquare)
+echo ==========================================================

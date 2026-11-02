@@ -1,0 +1,36 @@
+<Simulation>
+
+  <Include href="Includes/NaoV6H25.rsi2"/>
+  <Include href="Includes/UnicalMiniField.rsi2"/>
+
+  <!--
+    Scena Mezzo Campo UNICAL - Monitoraggio Remoto di 2 Robot Reali per DemoPassMini
+    - Campo: Mezzo campo UNICAL calibrato (UnicalMiniField.rsi2)
+    - Puppets:
+        * Giocatore1 (Porta): puppet collegato al robot n. 1 (x = 2.6m, y = 0, rivolto a 180deg)
+        * Giocatore2 (Centrocampo): puppet collegato al robot n. 2 (x = 0.8m, y = 0, rivolto a 0deg)
+  -->
+
+  <Scene name="RoboCup" controller="SimulatedNao" stepLength="0.012" color="rgb(65%, 65%, 70%)" ERP="0.8" CFM="0.001" contactSoftERP="0.2" contactSoftCFM="0.005">
+    <PointLight z="9m" ambientColor="rgb(50%, 50%, 50%)"/>
+
+    <Compound name="puppets">
+      <!-- Giocatore 1 (Area Porta) -->
+      <Body ref="Nao" name="Giocatore1">
+        <Translation x="2.6m" y="0m" z="320mm"/>
+        <Rotation z="180degree"/>
+        <Set name="NaoColor" value="purple"/>
+      </Body>
+
+      <!-- Giocatore 2 (Area Mezzaluna) -->
+      <Body ref="Nao" name="Giocatore2">
+        <Translation x="0.4m" y="0m" z="320mm"/>
+        <Rotation z="0degree"/>
+        <Set name="NaoColor" value="black"/>
+      </Body>
+    </Compound>
+
+    <Compound ref="field"/>
+
+  </Scene>
+</Simulation>

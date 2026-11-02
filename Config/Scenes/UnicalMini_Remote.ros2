@@ -1,0 +1,36 @@
+<Simulation>
+
+  <Include href="Includes/NaoV6H25.rsi2"/>
+  <Include href="Includes/UnicalMiniField.rsi2"/>
+
+  <!--
+    Scena Mezzo Campo UNICAL - Monitoraggio Remoto di 2 Robot Reali (Portiere vs Attaccante)
+    - Campo: Mezzo campo UNICAL (UnicalMiniField.rsi2) con singola porta a x = +3.25m e pareti
+    - Puppets:
+        * Portiere: puppet collegato al NAO n. 1 (posizionato a x = 3.05m rivolto verso il campo)
+        * Attaccante: puppet collegato al NAO n. 2 (posizionato a x = 0.8m rivolto verso la porta)
+  -->
+
+  <Scene name="RoboCup" controller="SimulatedNao" stepLength="0.012" color="rgb(65%, 65%, 70%)" ERP="0.8" CFM="0.001" contactSoftERP="0.2" contactSoftCFM="0.005">
+    <PointLight z="9m" ambientColor="rgb(50%, 50%, 50%)"/>
+
+    <Compound name="puppets">
+      <!-- Portiere -->
+      <Body ref="Nao" name="Portiere">
+        <Translation x="3.05m" y="0m" z="320mm"/>
+        <Rotation z="180degree"/>
+        <Set name="NaoColor" value="purple"/>
+      </Body>
+
+      <!-- Attaccante -->
+      <Body ref="Nao" name="Attaccante">
+        <Translation x="0.8m" y="0m" z="320mm"/>
+        <Rotation z="0degree"/>
+        <Set name="NaoColor" value="black"/>
+      </Body>
+    </Compound>
+
+    <Compound ref="field"/>
+
+  </Scene>
+</Simulation>

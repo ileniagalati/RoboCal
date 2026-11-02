@@ -1,0 +1,35 @@
+# =============================================================================
+#  UnicalMini - Mezzo campo laboratorio UNICAL
+#  Due robot per le demo di passaggio (robot3 passatore, robot2 attaccante)
+# =============================================================================
+
+# Include i comandi e le viste standard
+call Includes/Normal
+call Includes/Views
+
+# Disabilita le regole e gli interventi arbitrali automatici per i drill demo
+ar ballOut off
+ar placePlayers off
+ar placeBall off
+ar penalizeLeavingTheField off
+ar penalizeIllegalPosition off
+ar penalizeIllegalPositionInSet off
+
+# Seleziona tutti i robot della scena
+robot all
+
+# Silenzia warning innocui per richieste testa duplicate
+set module:LibCheckProvider notSetReaction = { motionRequest = warn; headMotionRequest = warn; calibrationFinished = ignore; passTarget = ignore; }; multipleSetReaction = { motionRequest = warn; headMotionRequest = ignore; calibrationFinished = warn; passTarget = warn; };
+
+# Sveglia i robot mettendoli nello stato attivo
+dr module:GameStateProvider:active
+
+# Imposta la demo combinata di passaggio e tiro (DemoPassAndScore) per tutti i robot
+set representation:LibDemo demoGameState = demoPassAndScore
+
+echo ==========================================================
+echo  Scena UnicalMini pronta!
+echo  Robot 3: Giocatore n. 3 (Passatore)
+echo  Robot 2: Giocatore n. 2 (Attaccante)
+echo  Demo attiva: DemoPassAndScore
+echo ==========================================================

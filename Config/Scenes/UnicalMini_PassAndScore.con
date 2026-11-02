@@ -1,0 +1,40 @@
+# =============================================================================
+#  UnicalMini - PassAndScore (Passaggio e Tiro)
+#  Due robot: robot3 passatore, robot2 attaccante
+# =============================================================================
+
+# Include i comandi e le viste standard
+call Includes/Normal
+call Includes/Views
+
+# Disabilita le regole e gli interventi arbitrali automatici per il drill
+ar ballOut off
+ar placePlayers off
+ar placeBall off
+ar penalizeLeavingTheField off
+ar penalizeIllegalPosition off
+ar penalizeIllegalPositionInSet off
+
+# Seleziona tutti i robot della scena
+robot all
+
+# Usa il vero filtro probabilistico di localizzazione (SelfLocator)
+for Cognition mr RobotPose SelfLocator
+
+# Usa l'oracolo della palla (Ground Truth dal simulatore):
+# Elimina il problema visivo per cui la croce del rigore (x = 2000) viene confusa con il pallone.
+# Per riattivare la visione della palla dal vivo, digitare in console: for Cognition mr BallModel BallStateEstimator
+for Cognition mr BallModel OracledWorldModelProvider
+
+# Silenzia warning innocui per richieste testa duplicate
+set module:LibCheckProvider notSetReaction = { motionRequest = warn; headMotionRequest = warn; calibrationFinished = ignore; passTarget = ignore; }; multipleSetReaction = { motionRequest = warn; headMotionRequest = ignore; calibrationFinished = warn; passTarget = warn; };
+
+# Sveglia i robot mettendoli nello stato di gioco attivo
+dr module:GameStateProvider:active
+
+echo ==========================================================
+echo  Scena UnicalMini_PassAndScore caricata con successo!
+echo  Robot 23: Giocatore n. 3 (Passatore)
+echo  Robot 22: Giocatore n. 2 (Attaccante)
+echo  Scenario attivo: PassAndScore (DemoPassAndScore)
+echo ==========================================================

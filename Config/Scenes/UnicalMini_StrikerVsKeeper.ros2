@@ -1,0 +1,71 @@
+<Simulation>
+
+  <Include href="Includes/NaoV6H25.rsi2"/>
+  <Include href="Includes/Ball2016SPL.rsi2"/>
+  <Include href="Includes/UnicalMiniField.rsi2"/>
+
+  <!--
+    Scena Mezzo Campo UNICAL: Attaccante vs Portiere (StrikerVsKeeperMini).
+    - Campo: Mezzo campo UNICAL calibrato (UnicalMiniField.rsi2) con porta a x = +3.22m / 3.25m
+    - Location: UnicalMini (parametri di visione e campo calibrati per il laboratorio)
+    - Scenario: StrikerVsKeeperMini (modulo LibDemoProvider con strikerVsKeeperMini)
+    - Robot:
+        * robot21: Portiere (Giocatore n. 1, seconda squadra per coordinate non specchiate verso +X), posizionato a x = 3.05m rivolto a 180deg (verso il campo)
+        * robot22: Attaccante (Giocatore n. 2, seconda squadra per coordinate non specchiate verso +X), posizionato a x = 0.8m rivolto a 0deg (verso la porta)
+  -->
+
+  <Compound name="robots">
+    <!-- Portiere (Giocatore n. 1) -->
+    <Body ref="Nao" name="robot21">
+      <Translation x="3.05" y="0" z="320mm"/>
+      <Rotation z="180degree"/>
+      <Set name="NaoColor" value="purple"/>
+    </Body>
+
+    <!-- Attaccante (Giocatore n. 2) -->
+    <Body ref="Nao" name="robot22">
+      <Translation x="0.8" y="0" z="320mm"/>
+      <Rotation z="0degree"/>
+      <Set name="NaoColor" value="black"/>
+    </Body>
+  </Compound>
+
+  <Scene name="RoboCup" controller="SimulatedNao" stepLength="0.012" color="rgb(65%, 65%, 70%)" ERP="0.8" CFM="0.001" contactSoftERP="0.2" contactSoftCFM="0.005">
+    <PointLight z="9m" ambientColor="rgb(50%, 50%, 50%)"/>
+
+    <Compound name="teams">
+      <Compound name="B-Human">
+        <Compound name="123"/>
+        <Compound name="black"/>
+        <Compound name="purple"/>
+      </Compound>
+      <Compound name="B-Team">
+        <Compound name="70"/>
+        <Compound name="red"/>
+        <Compound name="blue"/>
+      </Compound>
+    </Compound>
+
+    <Compound ref="robots"/>
+
+    <Compound name="balls">
+      <!-- Palla posizionata davanti all'attaccante a x = 1.3m -->
+      <Body ref="ball">
+        <Translation x="1.3" y="0" z="50mm"/>
+      </Body>
+    </Compound>
+
+    <Compound ref="field"/>
+
+    <!-- Seleziona i parametri calibrati per il laboratorio UNICAL -->
+    <Compound name="location">
+      <Compound name="UnicalMini"/>
+    </Compound>
+
+    <!-- Scenario dedicato con strikerVsKeeperMini -->
+    <Compound name="scenarios">
+      <Compound name="StrikerVsKeeperMini"/>
+    </Compound>
+
+  </Scene>
+</Simulation>

@@ -1,0 +1,19 @@
+# =============================================================================
+#  UnicalMini - Monitoraggio Remoto di 1 Robot Reale (es. ScoreGoal)
+# =============================================================================
+
+# Chiede l'IP o seleziona l'IP del robot (default su 192.168.123.3)
+sc Remote ${IP address:,192.168.123.3,192.168.123.1,192.168.123.2,192.168.123.4,192.168.123.5}
+
+# Inizializza le viste 2D del campo UnicalMini
+call Includes/FieldViews1
+call Includes/FieldViews2
+
+# Imposta debug responses e flussi telecamera compressi JPEG
+call Includes/DebugResponses
+call Includes/JPEGImageViews
+
+echo ==========================================================
+echo  Connessione remota attiva per 'Remote'!
+echo  Vista 2D disponibile sotto: RoboCup -> puppets -> Remote -> field -> worldState
+echo ==========================================================
